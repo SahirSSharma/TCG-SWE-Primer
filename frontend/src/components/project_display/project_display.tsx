@@ -1,63 +1,19 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
-import { getAllProjects, type Project } from "../../api/projects";
-import { getAssociatesByProjectId } from "../../api/associates";
-import { getAllUsers } from "../../api/users";
+import type { Project } from "../../api/projects";
+import type { User } from "../../api/users";
+import type { Associate } from "../../api/associates";
 import styles from "./project_display.module.css";
 
-type ProjectDisplayProps = {
-	refreshTrigger?: number;
-};
+type Props = { projects: Project[]; users: User[]; assignments: Associate[] };
 
-export default function ProjectDisplay({ refreshTrigger = 0 }: ProjectDisplayProps) {
-	const [projects, setProjects] = useState<Project[]>([]);
-	const [managerNamesById, setManagerNamesById] = useState<Record<number, string>>({});
-	const [associatesByProjectId, setAssociatesByProjectId] = useState<Record<number, number[]>>({});
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+export default function ProjectDisplay({ projects, users, assignments }: Props) {
+    function userName(id: number) {
+        return users.find(user => user.id === id)?.user_name ?? `User ${id}`;
+    }
 
-	useEffect(() => {
-		setIsLoading(true);
-		setError(null);
-
-		const loadProjects = async () => {
-			try {
-				const [allProjects, allUsers] = await Promise.all([getAllProjects(), getAllUsers()]);
-				const nameMap = Object.fromEntries(allUsers.map((user) => [user.id, user.user_name]));
-				const associatesEntries = await Promise.all(
-					allProjects.map(async (project) => {
-						try {
-							const associates = await getAssociatesByProjectId(project.id);
-							return [project.id, associates.map((associate) => associate.associate_id)] as const;
-						} catch {
-							return [project.id, []] as const;
-						}
-					}),
-				);
-
-				setProjects(allProjects);
-				setManagerNamesById(nameMap);
-				setAssociatesByProjectId(Object.fromEntries(associatesEntries));
-			} catch (err) {
-				const message = err instanceof Error ? err.message : "Failed to load projects";
-				setError(message);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		void loadProjects();
-	}, [refreshTrigger]);
-
-	if (isLoading) {
-		return <p>Loading projects...</p>;
-	}
-
-	if (error) {
-		return <p className={styles.error}>{error}</p>;
-	}
+    function associateNames(projectId: number) {
+        const members = assignments.filter(item => item.project_id === projectId);
+        return members.map(item => userName(item.associate_id)).join(", ") || "None";
+    }
 
 	if (projects.length === 0) {
 		return <p>No projects found.</p>;
@@ -81,14 +37,10 @@ export default function ProjectDisplay({ refreshTrigger = 0 }: ProjectDisplayPro
 							<td className={styles.cell}>{project.id}</td>
 							<td className={styles.cell}>{project.project_name}</td>
 							<td className={styles.cell}>
-								{managerNamesById[project.project_manager_id] ?? `User ${project.project_manager_id}`}
+								{userName(project.project_manager_id)}
 							</td>
 							<td className={styles.cell}>
-								{(associatesByProjectId[project.id] ?? []).length === 0
-									? "None"
-									: (associatesByProjectId[project.id] ?? [])
-											.map((associateId) => managerNamesById[associateId] ?? `User ${associateId}`)
-											.join(", ")}
+								{associateNames(project.id)}
 							</td>
 							<td className={styles.cell}>{project.project_description}</td>
 						</tr>

@@ -1,111 +1,12 @@
-.container {
-  max-width: 560px;
-  margin: 1rem 0;
-}
-
-.toggleButton {
+.container { margin: 1rem 0; max-width: 32rem; }
+.container summary, .container button { cursor: pointer; font-weight: 600; }
+.container form, .container label { display: grid; gap: 0.5rem; }
+.container form { padding: 1rem 0; gap: 1rem; }
+.container input, .container textarea, .container select, .container button {
   border: 1px solid #cbd5e1;
-  background: #f8fafc;
-  color: #0f172a;
-  border-radius: 8px;
-  padding: 0.6rem 0.9rem;
-  cursor: pointer;
-  font-weight: 600;
+  border-radius: 4px;
+  padding: 0.5rem;
 }
-
-.form {
-  margin-top: 0.75rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  padding: 1rem;
-  display: grid;
-  gap: 0.8rem;
-  background: #ffffff;
-}
-
-.label {
-  display: grid;
-  gap: 0.35rem;
-  color: #1e293b;
-  font-size: 0.95rem;
-}
-
-.input,
-.textarea {
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 0.55rem 0.65rem;
-  font-size: 0.95rem;
-}
-
-.textarea {
-  min-height: 96px;
-  resize: vertical;
-}
-
-.submitButton {
-  border: 1px solid #0f172a;
-  background: #0f172a;
-  color: #ffffff;
-  border-radius: 8px;
-  padding: 0.6rem 0.9rem;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.secondaryButton {
-  border: 1px solid #334155;
-  background: #ffffff;
-  color: #0f172a;
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.associateSection {
-  display: grid;
-  gap: 0.6rem;
-}
-
-.associateList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.5rem;
-}
-
-.associateItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 0.45rem 0.6rem;
-  background: #f8fafc;
-}
-
-.removeButton {
-  border: 1px solid #ef4444;
-  background: #ffffff;
-  color: #b91c1c;
-  border-radius: 8px;
-  padding: 0.35rem 0.6rem;
-  cursor: pointer;
-}
-
-.submitButton:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-.error {
-  color: #dc2626;
-  margin-top: 0.6rem;
-}
-
-.success {
-  color: #15803d;
-  margin-top: 0.6rem;
-}
+.container button { justify-self: start; background: #f1f5f9; }
+.container button:disabled { opacity: 0.5; }
+.container output:empty { display: none; }
