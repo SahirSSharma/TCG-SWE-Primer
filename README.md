@@ -2,6 +2,16 @@
 
 Analyst/associate name: Sahir Sharma
 
+## Run the completed primer
+
+This branch completes the `incomplete` starter using TCG’s published reference implementation. The dashboard lists project managers and associates by name. Use **Users** to add members, then **Projects** to create a project and assign associates.
+
+On the configured computer, run `npm start` in `backend` and `npm run dev` in `frontend` in separate terminals. Open http://localhost:3000.
+
+For a fresh clone, run `npm ci` in each directory and copy each directory’s `.example.env` to `.env`. Apply [the three-table migration](supabase/migrations/20261108000000_primer_tables.sql) to an empty Supabase project and fill in the backend’s Supabase URL and service key. Keep that key in the backend environment only.
+
+## Original workshop instructions
+
 > **Note:** If you get stuck, the `main` branch contains a complete reference implementation. You're also welcome to use the internet. If you use AI, finish the introduction first and read our guidance on using it effectively.
 
 Welcome to the SWE Primer for Triton Consulting Group! In this tutorial, you will learn the basics of MERN stack web development, with an emphasis on SQL databases. MERN is a widely used full-stack framework in industry. Here is what each letter stands for:

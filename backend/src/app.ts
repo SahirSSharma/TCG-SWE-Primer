@@ -40,6 +40,6 @@ export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
 console.log("Supabase client initialized successfully.");
 
 // Start the server and listen on the specified port
-app.listen(process.env.BACKEND_PORT || 4000, () => {
+app.listen(Number(process.env.BACKEND_PORT || 4000), "localhost", () => {
     console.log(`Server is running on port ${process.env.BACKEND_PORT || 4000}`);
 });
